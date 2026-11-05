@@ -10,4 +10,3 @@ Simulador por consola de un duelo Pokemon TCG Pocket: dos jugadores con mazos d
 ```java
 javac -d bin src/*.java
 java -cp bin Juego
-'''
