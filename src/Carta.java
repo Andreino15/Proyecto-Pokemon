@@ -8,5 +8,6 @@ public abstract class Carta {
     }
 
     public String getNombre() { return nombre; }
-    public String getTipo() { return tipo; }
+    public String getTipo() { 
+        return tipo; }
 }
