@@ -56,10 +56,11 @@ private boolean jugarTurno(Jugador activo, Jugador rival) {
         while (activo.getMano().size() < 5 && !activo.getMazo().getCartas().isEmpty()) {
             activo.robarCarta();
         }
-        
         if (activo.getMazo().getCartas().isEmpty()) {
-            System.out.println("¡" + activo.getNombre() + "No tiene mas cartas!.. GANA " + rival.getNombre());
-            return false;
+            System.out.println("¡" + activo.getNombre() + "No tiene mas cartas!.. GANA " + rival.getNombre() + ", Tiene" + rival.getRondasGanadas() + " Ronda(s) ganada(s)"
+            ); rival.incrementarRondasGanadas(); 
+        if (rival.getRondasGanadas() == 3 ){return false;}
+            
         }
 
         System.out.println("Tu Pokemon activo: " + activo.getPokemonActivo().getNombre() + " (" + activo.getPokemonActivo().getPs() + " PS)");
@@ -90,7 +91,7 @@ private boolean jugarTurno(Jugador activo, Jugador rival) {
             if (numeroCambio >= 0 && numeroCambio < activo.getMano().size()) {
                 if (activo.getMano().get(numeroCambio) instanceof Pokemon) {
                     activo.getMano().add(activo.getPokemonActivo()); 
-                    
+                    //casting para convertir o usar metodos de pokemon
                     activo.setPokemonActivo((Pokemon) activo.getMano().get(numeroCambio)); 
                     activo.getMano().remove(numeroCambio); 
                     System.out.println("Devolviste a tu pokemon. Ahora peleas con " + activo.getPokemonActivo().getGritoBatalla() );
@@ -134,13 +135,65 @@ private boolean jugarTurno(Jugador activo, Jugador rival) {
         }
 
         if (rival.getPokemonActivo().getPs() <= 0) {
-            System.out.println("\n¡" + rival.getPokemonActivo().getNombre() + " se ha debilitado!");
-            System.out.println("¡" + activo.getNombre() + " GANA LA PARTIDA!");
-            return false;
-        }
+    System.out.println("\n¡" + rival.getPokemonActivo().getNombre() + " se ha debilitado!");
 
-        return true;
+    activo.incrementarRondasGanadas();
+    System.out.println("¡" + activo.getNombre() + " GANA LA RONDA! Rondas ganadas: " + activo.getRondasGanadas()); 
+    
+    if (activo.getRondasGanadas() == 3) {
+        System.out.println("¡" + activo.getNombre() + " HA GANADO LA PARTIDA!");
+        return false;
     }
+
+  
+    boolean pokemonEnMano = false;
+    for (int i = 0; i < rival.getMano().size(); i++) {
+        Carta cartaEscoger = rival.getMano().get(i);
+        if (cartaEscoger instanceof Pokemon) {
+            pokemonEnMano = true;
+            break;
+        }
+    }
+
+    if (!pokemonEnMano) {
+        System.out.println(rival.getNombre() + " no tiene mas Pokemones disponibles en la mano.");
+        System.out.println("¡" + activo.getNombre() + " GANA LA PARTIDA!");
+        return false;
+    }
+
+  
+    System.out.println("\n" + rival.getNombre() + ", debes elegir a tu nuevo Pokemon activo:");
+    boolean seleccionValida = false;
+    
+    while (seleccionValida == false) {
+        System.out.println("Tus cartas en la mano:");
+        for (int i = 0; i < rival.getMano().size(); i++) {
+            System.out.println(i + ". " + rival.getMano().get(i).getNombre());
+        }
+        System.out.print("Elige el numero de tu nuevo Pokemon: ");
+        int numeroCambio = scanner.nextInt();
+
+        if (numeroCambio >= 0 && numeroCambio < rival.getMano().size()) {
+            Carta cartaElegida = rival.getMano().get(numeroCambio);
+            if (cartaElegida instanceof Pokemon) {
+                rival.setPokemonActivo((Pokemon) cartaElegida);
+                rival.getMano().remove(numeroCambio);
+                System.out.println(rival.getNombre() + " ahora juega con " + rival.getPokemonActivo().getGritoBatalla());
+                seleccionValida = true;
+            } else {
+                System.out.println("Esa carta no es un Pokemon \n");
+            }
+        } else {
+    
+            System.out.println("Numero fuera de rango \n");
+        }
+    }
+}
+return true;
+}
+
+
+    
 
     public void iniciarCombate() {
         System.out.println("-- ¡INICIA EL COMBATE! --");
@@ -148,7 +201,7 @@ private boolean jugarTurno(Jugador activo, Jugador rival) {
 
         while (combateActivo && jugador1.getPokemonActivo() != null && jugador2.getPokemonActivo() != null) {
             
-            
+    
             combateActivo = jugarTurno(jugador1, jugador2);
             if (!combateActivo) return; 
             
@@ -158,9 +211,9 @@ private boolean jugarTurno(Jugador activo, Jugador rival) {
                 pausa1 = scanner.nextInt();
             }
 
-        
+            //##J2
             combateActivo = jugarTurno(jugador2, jugador1);
-            if (!combateActivo) return;
+            if (!combateActivo) return; 
             
             int pausa2 = 0;
             while (pausa2 != 1) {
