@@ -1,31 +1,32 @@
 public class Entrenador extends Carta implements Activable {
     private String efecto;
+    private int cantidadCuracion;
 
-    public Entrenador(String nombre, String tipo, String efecto) {
+    public Entrenador(String nombre, String tipo, String efecto, int cantidadCuracion) {
         super(nombre, tipo);
         this.efecto = efecto;
+        this.cantidadCuracion = cantidadCuracion;
     }
 
     public String getEfecto() {
         return efecto;
     }
 
+    public int getCantidadCuracion() {
+        return cantidadCuracion;
+    }
+
     @Override
     public void activar(Jugador jugador) {
         if (jugador.getPokemonActivo() != null) {
-            int vidaActual = jugador.getPokemonActivo().getPs();
-            int nuevaVida = vidaActual + 20;
-            if (this.getNombre().equals("Julio Profe")) {
-                nuevaVida = nuevaVida - 10;
-            }
-            
-            if (nuevaVida > 80) {
-                jugador.getPokemonActivo().setPs(80);
+            Pokemon p = jugador.getPokemonActivo();
+            int nuevaVida = p.getPs() + cantidadCuracion;
+            if (nuevaVida > p.getPsMaximo()) {
+                p.setPs(p.getPsMaximo());
             } else {
-                jugador.getPokemonActivo().setPs(nuevaVida);
+                p.setPs(nuevaVida);
             }
-            
-            System.out.println("Pokemon curado, ahora tienes " + jugador.getPokemonActivo().getPs() + " Ps" );
+            System.out.println("¡" + getNombre() + " usado! Pokemon curado, ahora tienes " + p.getPs() + " PS");
         }
     }
 }
