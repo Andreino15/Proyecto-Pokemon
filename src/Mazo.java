@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Mazo {
-    private List <Carta> cartas;
+    private List<Carta> cartas;
 
     public Mazo() {
         this.cartas = new ArrayList<Carta>();
@@ -12,59 +12,36 @@ public class Mazo {
     }
 
     private void iniciarMazo() {
+        cartas.add(new Pokemon("Pikachu", "Electrico", 60, 1, "Mordisco", 1, 20));
+        cartas.add(new Pokemon("Charmander", "Fuego", 60, 1, "Ascuas", 1, 30));
+        cartas.add(new Pokemon("Squirtle", "Agua", 60, 1, "Placaje", 1, 20));
+        cartas.add(new Pokemon("Jigglypuff", "Incoloro", 70, 1, "Golpe", 1, 20));
+        cartas.add(new Pokemon("Magikarp", "Agua", 30, 1, "Chapoteo", 1, 10));
+        cartas.add(new Pokemon("Snorlax", "Incoloro", 150, 3, "Golpe Cuerpo", 3, 100));
 
-        Pokemon pikachu = new Pokemon("Pikachu", "Eléctrico", 80, "Pika-Pika Chuu",25); 
-        cartas.add(pikachu);
+        cartas.add(new Pokemon("Mewtwo ex", "Psiquico", 150, 2,
+                "Ataque Psiquico", 2, 50,
+                "Psicorrayo", 3, 150));
 
-        
+        cartas.add(new Pokemon("Zapdos ex", "Electrico", 130, 1,
+                "Picotazo", 1, 30,
+                "Tormenta Electrica", 3, 100));
 
-        Pokemon charmander = new Pokemon("Charmander", "Fuego", 80, "Charmandeeer!!", 25);
-        cartas.add(charmander);
+        cartas.add(new Pokemon("Moltres ex", "Fuego", 130, 1,
+                "Aleteo", 1, 30,
+                "Danza Infernal", 3, 70));
 
-       
-    
-        Pokemon squirtle = new Pokemon("Squirtle", "Agua", 80, "Squirttt-le",20);
-        cartas.add(squirtle);
+        cartas.add(new Pokemon("Articuno ex", "Agua", 130, 1,
+                "Viento Helado", 1, 30,
+                "Ventisca", 3, 100));
 
-        
-        Pokemon bulbasaur = new Pokemon("Bulbasaur", "Planta", 80, "Buulbaaasaaaurrr!!!", 23);
-        cartas.add(bulbasaur);
-
-       
-
-        Pokemon jigglypuff = new Pokemon("Jigglypuff", "Normal", 80, "Jiggggglyyyypuff!!!!",20);
-        cartas.add(jigglypuff);
-
-        
-   
-        Pokemon meowth = new Pokemon("Meowth", "Normal", 80, "Meeeeooowwwthh", 20);
-        cartas.add(meowth);
-
-       
-        
-        Pokemon machop = new Pokemon("Machop", "Lucha", 80, "Maaaachop",15);
-        cartas.add(machop);
-
-       
-    
-        Pokemon geodude = new Pokemon("Geodude", "Lucha", 80, "Geoodudee",22);
-        cartas.add(geodude);
-
-                
-
-        Pokemon gastly = new Pokemon("Gastly", "Psíquico", 80, "Gaastlyyyy",15);
-        cartas.add(gastly);
-
-                                 
-    
-
-        // cartas curqtivas 
-        for (int i = 0; i < 5; i++) {
-            Entrenador pocion = new Entrenador("Pocion", "Curativa", "Cura 20 PS al Pokemon en juego");
-            cartas.add(pocion);
-            
-            Entrenador profJulio = new Entrenador("Julio Profe", "Curativa", "Cura 10 PS al Pokemon en juego");
-            cartas.add(profJulio);
+ 
+        for (int i = 0; i < 2; i++) {
+            cartas.add(new Entrenador("Investigacion del Profesor", "Soporte", "Descarta tu mano actual y roba 2 cartas del mazo."));
+            cartas.add(new Entrenador("Pocion", "Objeto", "Cura 20 PS al Pokemon activo propio."));
+            cartas.add(new Entrenador("pokeball", "Objeto", "Busca en tu mazo 1 Pokemon basico y ponlo en tu mano."));
+            cartas.add(new Entrenador("Turbo Velocidad", "Objeto", "Reduce en 1 el costo de retirada del Pokemon activo este turno."));
+            cartas.add(new Entrenador("Misty", "Soporte", "Adjunta hasta 3 energia Agua a uno de tus Pokemon de Agua."));
         }
     }
 
